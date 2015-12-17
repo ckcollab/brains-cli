@@ -34,19 +34,19 @@ Opens up results in browser
 ==================
 
 Hello world
-```
+```yaml
 run: python hello_world.py
 content: hello_world.py
 ```
 
 Hello world with glob file pattern
-```
+```yaml
 run: python hello_world.py
 content: *.py
 ```
 
 Hello world multiple individual files
-```
+```yaml
 run: python hello_world.py
 content:
  - hello_world.py
