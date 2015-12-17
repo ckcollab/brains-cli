@@ -29,15 +29,6 @@ Also allows a `--name` so you can mark specific pushes, like `--name "working la
 
 Opens up results in browser
 
-TODO:
-
- - [ ] init command to make `brains.yaml`
- - [ ] send file to server
- - [ ] view results in browser
- - [ ] handle single/glob file pattern (`import glob; glob.glob("README.md")` still works no need to differentiate between single file and glob)
- - [ ] handle ARRAY file pattern
- - [ ] upload to pypi
-
 
 `brains.yaml` examples
 ==================
