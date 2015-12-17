@@ -1,7 +1,18 @@
 brains-cli
 ==========
 
+Command line interface to the brains project.
+
+
+installation
+============
+
+```pip install brains```
+
+
+
 usage
+=====
 
 ```brains init```
 asks for user information and how to run the program, saves to `brains.yaml` in current directory
