@@ -14,18 +14,18 @@ installation
 usage
 =====
 
-```brains init```
+##### `> brains init`
 
 asks for user information and how to run the program, saves to `brains.yaml` in current directory
 
-```brains push [dataset] [--name Name]``` 
+##### `> brains push [dataset] [--name Name]`
 
 requires `brains init` first. collects local source and pushes to server, optionally specifying
 a dataset to run against.
 
 Also allows a `--name` so you can mark specific pushes, like `--name "working layer activation function"`
 
-```brains results```
+##### `> brains results`
 
 Opens up results in browser
 
