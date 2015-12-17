@@ -18,12 +18,9 @@ usage
 
 asks for user information and how to run the program, saves to `brains.yaml` in current directory
 
-##### `> brains push [dataset] [--name Name]`
+##### `> brains push [--dataset iris] [--name "My first try"]`
 
-requires `brains init` first. collects local source and pushes to server, optionally specifying
-a dataset to run against.
-
-Also allows a `--name` so you can mark specific pushes, like `--name "working layer activation function"`
+requires `brains init` first. collects local source and pushes to server
 
 ##### `> brains results`
 
@@ -34,19 +31,19 @@ Opens up results in browser
 ==================
 
 Hello world
-```yaml
+```
 run: python hello_world.py
 content: hello_world.py
 ```
 
 Hello world with glob file pattern
-```yaml
+```
 run: python hello_world.py
 content: *.py
 ```
 
 Hello world multiple individual files
-```yaml
+```
 run: python hello_world.py
 content:
  - hello_world.py
