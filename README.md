@@ -18,12 +18,9 @@ usage
 
 asks for user information and how to run the program, saves to `brains.yaml` in current directory
 
-##### `> brains push [dataset] [--name Name]`
+##### `> brains push [--dataset iris] [--description "My first try"] [--dont-wait-up]`
 
-requires `brains init` first. collects local source and pushes to server, optionally specifying
-a dataset to run against.
-
-Also allows a `--name` so you can mark specific pushes, like `--name "working layer activation function"`
+requires `brains init` first. collects local source and pushes to server. `--dont-wait-up` will make the call return immediately and not wait for results
 
 ##### `> brains results`
 
@@ -45,11 +42,12 @@ run: python hello_world.py
 content: *.py
 ```
 
-Hello world multiple individual files
+Hello world multiple individual files AND glob patterns
 ```
 run: python hello_world.py
 content:
  - hello_world.py
  - test_hello_world.py
  - yo_momma.dataset
+ - src/*.py
 ```
