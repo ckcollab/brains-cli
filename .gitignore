@@ -58,3 +58,6 @@ target/
 
 # PyCharm
 .idea/
+
+# My test dirs
+playing_around/

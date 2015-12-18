@@ -18,13 +18,13 @@ usage
 
 asks for user information and how to run the program, saves to `brains.yaml` in current directory
 
-##### `> brains push [--dataset iris] [--name "My first try"]`
+##### `> brains push [--dataset iris] [--description "My first try"] [--dont-wait-up]`
 
-requires `brains init` first. collects local source and pushes to server
+requires `brains init` first. collects local source and pushes to server. `--dont-wait` will make the call return immediately and not wait for results
 
 ##### `> brains results`
 
-Opens up results in browser
+TODO: Opens up results in browser
 
 
 `brains.yaml` examples
@@ -42,11 +42,12 @@ run: python hello_world.py
 content: *.py
 ```
 
-Hello world multiple individual files
+Hello world multiple individual files AND glob patterns
 ```
 run: python hello_world.py
 content:
  - hello_world.py
  - test_hello_world.py
  - yo_momma.dataset
+ - src/*.py
 ```
