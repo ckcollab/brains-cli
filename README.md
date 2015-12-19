@@ -51,3 +51,14 @@ content:
  - yo_momma.dataset
  - src/*.py
 ```
+
+
+
+
+
+
+# TODO
+
+ - [ ] finish `get` command where to save it?
+ - [ ] `brains run` should fetch dataset/cache it properly (use name not UUID)
+ - [x] support multiple datasets

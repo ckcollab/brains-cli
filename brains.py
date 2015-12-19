@@ -17,6 +17,7 @@ from zipfile import ZipFile
 CONFIG_FILE = "brains.yaml"
 HISTORY_DIR = "brains_history"
 URL_BASE = "http://localhost:8000"
+#URL_BASE = "http://dev-coop-brains.herokuapp.com"
 URL_SUBMIT = "%s/submissions/create" % URL_BASE
 
 
@@ -70,10 +71,10 @@ def init(name, languages, run):
 
 @cli.command()
 @click.option('--description', default=None, help='description')
-@click.option('--dataset', default=None, help='name of dataset to use (overrides brains.yaml)')
+@click.option('--datasets', default=None, help='comma separated name of datasets to use (overrides brains.yaml)')
 @click.option('--wait/--dont-wait', default=True, help="wait for results or return immediately")
 @click.option('--verbose', default=False, is_flag=True, help="print extra output")
-def push(description, dataset, wait, verbose):
+def push(description, datasets, wait, verbose):
     """Publish your submission to brains"""
     # Loading config
     config = _get_config()
@@ -81,6 +82,11 @@ def push(description, dataset, wait, verbose):
     if not isinstance(file_patterns, type([])):
         # put it into an array so we can iterate it, if it isn't already an array
         file_patterns = [file_patterns]
+    if datasets:
+        datasets_string = datasets.split(',')
+    else:
+        datasets_string = config.get("datasets", '')
+
 
     # Getting all file names/globs -- making sure we get CONFIG_FILE
     files = {CONFIG_FILE}  # use a set so we don't get duplicates
@@ -122,7 +128,7 @@ def push(description, dataset, wait, verbose):
                     "name": config["name"],
                     "description": description or '',
                     "languages": config["languages"],
-                    "dataset": config.get("dataset", None) or dataset or '',
+                    "datasets": datasets_string,
                     "wait": wait,
                 },
                 stream=wait  # if we're waiting for response then stream
