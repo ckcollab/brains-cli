@@ -70,7 +70,7 @@ def init(name, languages, run):
 
 @cli.command()
 @click.option('--description', default=None, help='description')
-@click.option('--dataset', default=None, help='name of dataset to use')
+@click.option('--dataset', default=None, help='name of dataset to use (overrides brains.yaml)')
 @click.option('--wait/--dont-wait', default=True, help="wait for results or return immediately")
 @click.option('--verbose', default=False, is_flag=True, help="print extra output")
 def push(description, dataset, wait, verbose):
@@ -122,48 +122,48 @@ def push(description, dataset, wait, verbose):
                     "name": config["name"],
                     "description": description or '',
                     "languages": config["languages"],
-                    "dataset": dataset or '',
+                    "dataset": config.get("dataset", None) or dataset or '',
                     "wait": wait,
                 },
                 stream=wait  # if we're waiting for response then stream
             )
-            cprint("done", 'green')
+
+            if response.status_code == 200:
+                cprint("done", 'green')
+
+                if wait:
+                    _print("\nOutput: ")
+                    cprint(" " * 70, 'green', attrs=('underline',))
+
+                    chunk_buffer = ""
+                    # read in 1 chunk at a time for carriage return detection
+                    for chunk in response.iter_content(chunk_size=1):
+                        chunk_buffer += chunk
+
+                        if chunk == '\r':
+                            # We hit the end of a message!
+                            try:
+                                data = json.loads(chunk_buffer)
+                                if "stdout" not in data or "stderr" not in data:
+                                    print "dis one"
+                                    continue
+                            except (ValueError,):
+                                continue
+
+                            if data["stdout"]:
+                                # Get rid of termination string, if it's there
+                                data["stdout"] = data["stdout"].replace("-%-%-%-%-END BRAIN SEQUENCE-%-%-%-%-", "")
+                                _print(data["stdout"])
+                            if data["stderr"]:
+                                _print(colored(data["stderr"], 'red'))
+
+                            # Clear buffer after reading message
+                            chunk_buffer = ""
+            else:
+                cprint(response.json()["error"], 'red')
         except requests.exceptions.ConnectionError:
             cprint("failed to connect to server!", 'red')
             exit(-2)
-
-        if wait:
-            # _print("waiting for result to begin streaming...")
-            # cprint("done", 'green')
-            _print("\nOutput: ")
-            cprint(" " * 80, 'green', attrs=('underline',))
-
-            chunk_buffer = ""
-            for chunk in response.iter_content(chunk_size=1):
-                # Get rid of termination string, if it's there
-                chunk_buffer += chunk
-
-                if chunk == '\r':
-                    # We hit the end of a message!
-                    try:
-                        data = json.loads(chunk_buffer)
-                        if "stdout" not in data or "stderr" not in data:
-                            print "dis one"
-                            continue
-                    except (ValueError,):
-                        continue
-
-                    if data["stdout"]:
-                        data["stdout"] = data["stdout"].replace("-%-%-%-%-END BRAIN SEQUENCE-%-%-%-%-", "")
-                        _print(data["stdout"])
-                    if data["stderr"]:
-                        _print(colored(data["stderr"], 'red'))
-
-                    # Clear buffer after reading message
-                    chunk_buffer = ""
-
-    print ""
-    print "all done!"
 
 
 @cli.command()
@@ -185,3 +185,9 @@ def run(dataset):
 
     cprint('Running "%s"' % config["run"], 'green', attrs=("underline",))
     call(config["run"].split())
+
+
+@cli.command()
+def get(submission_id):
+    # TODO: Download some submission to work with
+    pass
