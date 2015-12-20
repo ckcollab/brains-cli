@@ -16,8 +16,8 @@ from zipfile import ZipFile
 # Constants
 CONFIG_FILE = "brains.yaml"
 HISTORY_DIR = "brains_history"
-URL_BASE = "http://localhost:8000"
-#URL_BASE = "http://dev-coop-brains.herokuapp.com"
+#URL_BASE = "http://localhost:8000"
+URL_BASE = "http://dev-coop-brains.herokuapp.com"
 URL_SUBMIT = "%s/submissions/create" % URL_BASE
 
 
@@ -48,25 +48,33 @@ def cli():
             exit(-1)
 
 
+INIT_RUN_MESSAGE_1 = colored("How do you run your script? eg, ", "cyan")
+INIT_RUN_MESSAGE_2 = colored("python run.py $INPUT ", "magenta")
+INIT_RUN_MESSAGE_3 = colored("($INPUT replaced with dataset path)\n", "cyan")
+
 @cli.command()
-@click.option("--name", prompt="Give me your brains, I mean name")
-@click.option("--languages", prompt="Languages used (python, ruby, etc.)")
-@click.option("--run", prompt="How do you run your script? (eg, `python run.py $INPUT` where $INPUT is replaced with dataset folder name)\n")
+@click.option("--name", prompt=colored("Give me your brains, I mean name", "cyan"))
+@click.option("--languages", prompt=colored("Languages (python, ruby, etc.)", "cyan"))
+@click.option("--run", prompt=INIT_RUN_MESSAGE_1 + INIT_RUN_MESSAGE_2 + INIT_RUN_MESSAGE_3)
 def init(name, languages, run):
     """Initializes your CONFIG_FILE for the current submission"""
+    contents = [file_name for file_name in glob.glob("*.*") if file_name != "brains.yaml"]
+
     with open(CONFIG_FILE, "w") as output:
         output.write(yaml.safe_dump({
             "run": run,
             "name": name,
             "languages": languages,
-            "contents": "put your files here!"
+            # automatically insert all root files into contents
+            "contents": contents,
         }, default_flow_style=False))
 
-    warning_message = "  One last thing: edit %s `contents` to include your files  " % CONFIG_FILE
-
-    cprint(" " * len(warning_message), 'white', 'on_red')
-    cprint(warning_message, 'white', 'on_red', attrs=['bold'])
-    cprint(" " * len(warning_message), 'white', 'on_red')
+    print ""
+    cprint("Automatically including the follow files in brain contents:", "cyan")
+    for file_name in contents:
+        print "\t", file_name
+    print ""
+    cprint("done! brains.yaml created", 'green')
 
 
 @cli.command()

@@ -1,7 +1,7 @@
 brains-cli
 ==========
 
-Command line interface to the brains project.
+Command line interface to [brains](http://github.com/dev-coop/brains)
 
 
 installation
@@ -61,4 +61,5 @@ content:
 
  - [ ] finish `get` command where to save it?
  - [ ] `brains run` should fetch dataset/cache it properly (use name not UUID)
+ - [x] change `init` to automatically put every file in contents except brains history
  - [x] support multiple datasets
