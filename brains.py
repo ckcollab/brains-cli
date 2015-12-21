@@ -147,7 +147,7 @@ def push(description, datasets, wait, verbose):
 
                 if wait:
                     _print("\nOutput: ")
-                    cprint(" " * 70, 'green', attrs=('underline',))
+                    cprint(" " * 72, 'green', attrs=('underline',))
 
                     chunk_buffer = ""
                     # read in 1 chunk at a time for carriage return detection

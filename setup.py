@@ -23,7 +23,7 @@ setup(
     name="brains",
     py_modules=["brains"],
     entry_points=entry_points,
-    version="0.0.4",
+    version="0.0.5",
     author="Eric Carmichael",
     author_email="eric@ckcollab.com",
     description="Helps submit files to brains app",

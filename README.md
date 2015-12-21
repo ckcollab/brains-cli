@@ -61,5 +61,7 @@ content:
 
  - [ ] finish `get` command where to save it?
  - [ ] `brains run` should fetch dataset/cache it properly (use name not UUID)
+ - [ ] TODO: Opens up results in browser/go to browser with current config already setup?
  - [x] change `init` to automatically put every file in contents except brains history
  - [x] support multiple datasets
+ - [ ] add `brains datasets` to list datasets
