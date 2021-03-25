@@ -16,7 +16,7 @@ entry_points = {
 setup(
     install_requires=[
         "click==6.2",
-        "pyyaml==3.11",
+        "pyyaml==5.4",
         "termcolor==1.1.0",
         "requests==2.9.0",
     ],
